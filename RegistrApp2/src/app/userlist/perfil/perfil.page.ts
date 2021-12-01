@@ -18,18 +18,18 @@ export class PerfilPage implements OnInit {
     email:'',
     fono:''
   };
-userlistService: UserlistService;
+userlisService: UserlistService;
 
 campo: string;
 
 constructor(private router: Router,private activateRoute: ActivatedRoute,
      userlistService: UserlistService,public toastController: ToastController) {
-       this.userlistService=userlistService;
+       this.userlisService=userlisService;
        this.activateRoute.paramMap.subscribe(
         paramMap=>{
           const idContactoRecibido=paramMap.get('userId');
           alert(idContactoRecibido);
-         this.userlistService.getUsuario(idContactoRecibido).then(res=>{
+         this.userlisService.getUsuario(idContactoRecibido).then(res=>{
          this.user=res;
          this.user.id=idContactoRecibido;
           });
@@ -42,7 +42,7 @@ constructor(private router: Router,private activateRoute: ActivatedRoute,
       paramMap=>{
         const idContactoRecibido=paramMap.get('contactoId');
         alert(idContactoRecibido);
-       this.userlistService.getUsuario(idContactoRecibido).then(res=>{
+       this.userlisService.getUsuario(idContactoRecibido).then(res=>{
        this.user=res;
        this.user.id=idContactoRecibido;
         });
@@ -55,7 +55,7 @@ constructor(private router: Router,private activateRoute: ActivatedRoute,
       alert('Inicia Actualiza');
       alert('id: '+this.user.id);
       alert('Nombre: '+this.user.nombre);
-        this.userlistService.updateUsuario(
+        this.userlisService.updateUsuario(
           this.user.id,
           this.user.nombre.valueOf(),
           this.user.apellidos.valueOf(),
@@ -73,7 +73,7 @@ constructor(private router: Router,private activateRoute: ActivatedRoute,
   }
  borrarContacto(){
   alert('Inicia delete');
-        this.userlistService.deleteUsuario(this.user.id);
+        this.userlisService.deleteUsuario(this.user.id);
           this.presentToast('Datos correctamente eliminados');
           alert('Fin Delete');
   }

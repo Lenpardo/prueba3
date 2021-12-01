@@ -10,9 +10,9 @@
 <ion-content [fullscreen]="true">
 
   <ion-list *ngFor="let user of listUser">
-    <ion-item [routerLink]="['/userlist/perfil/', user.id]" routerDirection="forward">
+    <ion-item [routerLink]="['/userlist/perfil/user.id', user.id]" routerDirection="forward">
       <ion-avatar slot="start">
-        <img src="./assets/img/avatar.jpg" alt="">
+        <img src="./assets/icon/perfil.png" alt="">
       </ion-avatar>
       <ion-label>
          {{user.name}}

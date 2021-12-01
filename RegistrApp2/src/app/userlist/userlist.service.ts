@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User } from './user.model';
+import { UserSqlite } from './user.model';
 import {ServiciosService} from '../servicios/servicios.service';
 
 @Injectable({
@@ -7,8 +7,8 @@ import {ServiciosService} from '../servicios/servicios.service';
 })
 export class UserlistService {
   
-  public listUser: User[] = [];
-  user: User;
+  public listUser: UserSqlite[] = [];
+  userSqlite: UserSqlite;
   db: ServiciosService;
 
   constructor( db: ServiciosService) {
@@ -29,11 +29,11 @@ export class UserlistService {
    });
    return this.listUser;
  }
- getUsuario(idUser: string): Promise<User>
+ getUsuario(idUser: string): Promise<UserSqlite>
  {
      return this.db.getUsuario(idUser).then(data => {
-         this.user = data;
-         return this.user;
+         this.userSqlite = data;
+         return this.userSqlite;
       });
   }
 
