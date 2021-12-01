@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons> 
+    <ion-title>Lista Usuario SQLite</ion-title>      
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-list *ngFor="let user of listUser">
+    <ion-item [routerLink]="['/userlist/perfil/', user.id]" routerDirection="forward">
+      <ion-avatar slot="start">
+        <img src="./assets/img/avatar.jpg" alt="">
+      </ion-avatar>
+      <ion-label>
+         {{user.name}}
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-button routerLink="/new-user" routerDirection="back">Registra Nuevo contacto</ion-button>
+</ion-content>

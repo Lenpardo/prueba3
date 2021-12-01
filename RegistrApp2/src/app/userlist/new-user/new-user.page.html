@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Registrar Usuario</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <img src="./assets/img/duoc.png" alt="">
+  <ion-card>
+
+    <ion-card-header>
+      <ion-title>Registrar contacto</ion-title>
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <ion-item lines="full">
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input type="text" [(ngModel)]="contacto.nombre"></ion-input>
+      </ion-item> 
+
+      <ion-item lines="full">
+        <ion-label position="floating">Apellidos</ion-label>
+        <ion-input type="text" [(ngModel)]="contacto.apellidos"></ion-input>
+      </ion-item>
+
+      <ion-item lines="full">
+        <ion-label position="floating">Domicilio</ion-label>
+        <ion-input type="text" [(ngModel)]="contacto.domicilio"></ion-input>
+      </ion-item> 
+
+      <ion-item lines="full">
+        <ion-label position="floating" >Fono</ion-label>
+        <ion-input type="text" [(ngModel)]="contacto.fono"></ion-input>
+      </ion-item>  
+
+      <ion-item lines="full">
+        <ion-label position="floating">Email</ion-label>
+        <ion-input type="text" [(ngModel)]="contacto.email"></ion-input>
+      </ion-item>  
+
+      <ion-row>
+        <ion-col>
+          <ion-button expand="full" (click)="registrarUsuario()">Registrar Contacto</ion-button>
+        </ion-col>
+      </ion-row>
+
+    </ion-card-content>
+
+  </ion-card>
+</ion-content>
