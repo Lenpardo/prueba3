@@ -7,7 +7,7 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
 import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
 import { BehaviorSubject } from 'rxjs';
 
-import { User } from '../Userlist/user.model';
+import { UserSqlite } from '../Userlist/user.model';
 
 
 interface Dato {
@@ -25,22 +25,21 @@ interface Dato {
 export class ServiciosService {
 
   private dbReady = new BehaviorSubject<boolean>(false);
-  private dataBase: SQLiteObject;
+  private servicios: SQLiteObject;
   private http: HttpClient;
   private  sqlPorter: SQLitePorter;
   private sqlite: SQLite;
 
   listUser = new BehaviorSubject([]);
 
-  private user: User;
+  private user: UserSqlite;
   dato:Dato;
   public baseUr2 = 'https://jsonplaceholder.typicode.com/users';
 
 
   constructor( http: HttpClient,plataforma: Platform,sqlite: SQLite, sqlPorter: SQLitePorter)
   {
-    
- plataforma.ready()
+    plataforma.ready()
    .then(() => {
       this.sqlite=sqlite;
       this.http=http;
@@ -51,7 +50,7 @@ export class ServiciosService {
         createFromLocation: 1
       })
       .then((db: SQLiteObject) => {
-        this.dataBase = db;
+        this.servicios = db;
           this.crearTablas();
           alert('Creando Tablas');
         }).catch(e =>{
@@ -60,14 +59,13 @@ export class ServiciosService {
           console.error('Error al crear Tablas '+ e.message);
         });
    }).catch(e => alert('Error de Plataforma'));
+   
   }
-  get_Datos() {
-      return this.http.get(this.baseUr2 )
-  }    
+     
   crearTablas() {
   this.http.get('../assets/db/BaseDato.sql',{responseType: 'text'})
       .subscribe(sql => {
-        this.sqlPorter.importSqlToDb(this.dataBase, sql)
+        this.sqlPorter.importSqlToDb(this.servicios, sql)
           .then(async _ => {
             alert('Base de Dato creada');
              this.cargarUsuarios();
@@ -86,13 +84,13 @@ export class ServiciosService {
     return this.dbReady.asObservable();
   }
 
- getUsuarios(): Observable<User[]>{
+ getUsuarios(): Observable<UserSqlite[]>{
           return this.listUser.asObservable();
   }
 
   cargarUsuarios(){
-    return this.dataBase.executeSql('SELECT * FROM user', []).then(data => {
-      let user: User[] = [];
+    return this.servicios.executeSql('SELECT * FROM user', []).then(data => {
+      let user: UserSqlite[] = [];
 
       if (data.rows.length > 0) {
         for (var i = 0; i < data.rows.length; i++) {
@@ -104,8 +102,8 @@ export class ServiciosService {
     });
   }
 
-getUsuario(id): Promise<User> {
-  return this.dataBase.executeSql('SELECT * FROM user WHERE id = ?', [id]).then(resSelect => { 
+getUsuario(id): Promise<UserSqlite> {
+  return this.servicios.executeSql('SELECT * FROM user WHERE id = ?', [id]).then(resSelect => { 
       return {
             id: resSelect.rows.item(0).id,
             nombre: resSelect.rows.item(0).nombre,
@@ -119,7 +117,7 @@ getUsuario(id): Promise<User> {
 
   addUsuario(nombre, apellidos,domicilio,email,fono) {
     let data = [ nombre, apellidos,domicilio,email,fono];
-    return this.dataBase.executeSql('INSERT INTO user (nombre, apellidos, domicilio, email,fono) VALUES (?, ?, ? ,? ,?)', data)
+    return this.servicios.executeSql('INSERT INTO user (nombre, apellidos, domicilio, email,fono) VALUES (?, ?, ? ,? ,?)', data)
     .then(res => {
      this.cargarUsuarios();
     });
@@ -127,7 +125,7 @@ getUsuario(id): Promise<User> {
   updateUsuario(nombre, apellidos,domicilio,email,fono,id) {
     alert('Actualiza '+id);
     let data = [ nombre, apellidos,domicilio,email,fono,id];
-    return this.dataBase.executeSql('UPDATE user SET nombre=?, apellidos=?, domicilio=?, email=?,fono=? WHERE id=?', data)
+    return this.servicios.executeSql('UPDATE user SET nombre=?, apellidos=?, domicilio=?, email=?,fono=? WHERE id=?', data)
     .then(res => {
      this.cargarUsuarios();
     });
@@ -136,23 +134,22 @@ getUsuario(id): Promise<User> {
  deleteUsuario(id) {
     alert('Delete '+id);
     let data = [ id];
-    return this.dataBase.executeSql('DELETE FROM user  WHERE id=?', data)
+    return this.servicios.executeSql('DELETE FROM user  WHERE id=?', data)
     .then(res => {
      this.cargarUsuarios();
     });
   }
+
+  get_Datos() {
+    return this.http.get(this.baseUr2 )// api rest
+
+} 
 }
 
-
-
-// //
-
-//   
 
 //   public baseUrl = 'https://rickandmortyapi.com/api/character/1';
 //   // public baseUrl = 'https://jsonplaceholder.typicode.com/posts';
 //   public baseUr2 = 'https://jsonplaceholder.typicode.com/users';
-
 
 //   constructor( private http: HttpClient ) {  }
   

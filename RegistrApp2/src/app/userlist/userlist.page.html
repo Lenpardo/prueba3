@@ -10,14 +10,14 @@
 <ion-content [fullscreen]="true">
 
   <ion-list *ngFor="let user of listUser">
-    <ion-item [routerLink]="['/userlist/perfil/user.id', user.id]" routerDirection="forward">
+    <ion-item [routerLink]="['/userlist/perfil/userSqlite.id', userSqlite.id]" routerDirection="forward">
       <ion-avatar slot="start">
         <img src="./assets/icon/perfil.png" alt="">
       </ion-avatar>
       <ion-label>
-         {{user.name}}
+         {{userSqlite.name}}
       </ion-label>
     </ion-item>
   </ion-list>
-  <ion-button routerLink="/new-user" routerDirection="back">Registra Nuevo contacto</ion-button>
+  <ion-button routerLink="/userlist/new-user" routerDirection="back">Registra Nuevo contacto</ion-button>
 </ion-content>

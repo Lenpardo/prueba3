@@ -23,6 +23,10 @@ const routes: Routes = [
     path: 'camara',
     loadChildren: () => import('./camara/camara.module').then( m => m.CamaraPageModule)
   },
+  {
+    path: 'userlist',
+    loadChildren: () => import('./userlist/userlist.module').then( m => m.UserlistPageModule)
+  },
   // {
   //   path: 'geolocalizacion',
   //   loadChildren: () => import('./geolocalizacion/geolocalizacion.module').then( m => m.GeolocalizacionPageModule)
@@ -31,13 +35,6 @@ const routes: Routes = [
   //   path: 'nuevo-user',
   //   loadChildren: () => import('./login/nuevo-user/nuevo-user.module').then( m => m.NuevoUserPageModule)
   // },
-  // {
-  //   path: 'userlist',
-  //   loadChildren: () => import('./userlist/userlist.module').then( m => m.UserlistPageModule)
-  // },
-  
- 
-  
   // {
   //   path: 'userlist/:userId',
   //   pathMatch: 'full',
